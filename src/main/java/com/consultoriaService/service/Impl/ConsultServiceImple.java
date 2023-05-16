@@ -1,5 +1,8 @@
 package com.consultoriaService.service.Impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.consultoriaService.entity.Consulting;
@@ -27,6 +30,16 @@ public class ConsultServiceImple implements ConsultService {
         return mapToDto(consultSaved);
     }
 
+    @Override
+    public List<ConsultDto> getAllConsults() {
+       
+        List<Consulting> consults = consultRepository.findAll();
+
+        List<ConsultDto> consultsResponse = consults.stream().map( consult -> mapToDto(consult)).collect(Collectors.toList());
+
+        return consultsResponse;
+    }
+
     Consulting matToEntity(ConsultDto consultDto){
 
         Consulting consulting = new Consulting();
@@ -34,6 +47,7 @@ public class ConsultServiceImple implements ConsultService {
         consulting.setName(consultDto.getName());
         consulting.setPhone(consultDto.getPhone());
         consulting.setType(consultDto.getType());
+        consulting.setEmail(consultDto.getEmail());
 
         return consulting;
     }
@@ -46,8 +60,11 @@ public class ConsultServiceImple implements ConsultService {
         consultDto.setEmail(consult.getEmail());
         consultDto.setPhone(consult.getPhone());
         consultDto.setType(consult.getType());
+        consultDto.setName(consult.getName());
 
         return consultDto;
     }
+
+    
     
 }
