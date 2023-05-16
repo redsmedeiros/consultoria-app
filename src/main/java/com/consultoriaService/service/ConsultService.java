@@ -9,4 +9,6 @@ public interface ConsultService {
     ConsultDto createConsult(ConsultDto consultDto);
 
     List<ConsultDto> getAllConsults();
+
+    ConsultDto getConsulById(Long consultId);
 }

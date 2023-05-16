@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.consultoriaService.entity.Consulting;
+import com.consultoriaService.exception.ResourceNotFoundException;
 import com.consultoriaService.payload.ConsultDto;
 import com.consultoriaService.repository.ConsultRepository;
 import com.consultoriaService.service.ConsultService;
@@ -40,6 +41,14 @@ public class ConsultServiceImple implements ConsultService {
         return consultsResponse;
     }
 
+    @Override
+    public ConsultDto getConsulById(Long consultId) {
+        
+        Consulting consult = consultRepository.findById(consultId).orElseThrow(()-> new ResourceNotFoundException("consultId", "id", consultId));
+
+        return mapToDto(consult);
+    }
+
     Consulting matToEntity(ConsultDto consultDto){
 
         Consulting consulting = new Consulting();
@@ -64,6 +73,8 @@ public class ConsultServiceImple implements ConsultService {
 
         return consultDto;
     }
+
+   
 
     
     
