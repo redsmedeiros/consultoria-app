@@ -54,7 +54,12 @@ public class ConsultServiceImple implements ConsultService {
         
         Consulting consulting = consultRepository.findById(consultId).orElseThrow(()-> new ResourceNotFoundException("consultId", "id", consultId));
 
-        
+        Consulting consultExist = consultRepository.findByEmail(consultDto.getEmail());
+
+        if(consultExist == null){
+            
+            throw new ResourceNotFoundException(null, null, consultId);
+        }
 
         consulting.setName(consultDto.getName());
         consulting.setEmail(consultDto.getEmail());
