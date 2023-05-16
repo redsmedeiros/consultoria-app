@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +46,14 @@ public class ConsultController {
     public ResponseEntity<ConsultDto> getConsultById(@PathVariable(name = "id") Long consultId){
 
         ConsultDto response = consultService.getConsulById(consultId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ConsultDto> updateConsult(@PathVariable(name = "id") Long consultId, @RequestBody ConsultDto consultDto){
+
+        ConsultDto response = consultService.updateConsultById(consultId, consultDto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

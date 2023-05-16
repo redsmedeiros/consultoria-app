@@ -11,4 +11,6 @@ public interface ConsultService {
     List<ConsultDto> getAllConsults();
 
     ConsultDto getConsulById(Long consultId);
+
+    ConsultDto updateConsultById(Long consultId, ConsultDto consultDto);
 }

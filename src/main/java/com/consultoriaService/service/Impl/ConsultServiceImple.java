@@ -49,6 +49,23 @@ public class ConsultServiceImple implements ConsultService {
         return mapToDto(consult);
     }
 
+    @Override
+    public ConsultDto updateConsultById(Long consultId, ConsultDto consultDto) {
+        
+        Consulting consulting = consultRepository.findById(consultId).orElseThrow(()-> new ResourceNotFoundException("consultId", "id", consultId));
+
+        
+
+        consulting.setName(consultDto.getName());
+        consulting.setEmail(consultDto.getEmail());
+        consulting.setPhone(consultDto.getPhone());
+        consulting.setType(consultDto.getType());
+
+        Consulting updateConsult = consultRepository.save(consulting);
+
+        return mapToDto(updateConsult);
+    }
+
     Consulting matToEntity(ConsultDto consultDto){
 
         Consulting consulting = new Consulting();
@@ -73,6 +90,8 @@ public class ConsultServiceImple implements ConsultService {
 
         return consultDto;
     }
+
+   
 
    
 
