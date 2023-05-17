@@ -8,7 +8,7 @@ public interface ConsultService {
     
     ConsultDto createConsult(ConsultDto consultDto);
 
-    List<ConsultDto> getAllConsults();
+    List<ConsultDto> getAllConsults(int pageNo, int pageSize);
 
     ConsultDto getConsulById(Long consultId);
 

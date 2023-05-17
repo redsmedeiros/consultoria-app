@@ -3,6 +3,9 @@ package com.consultoriaService.service.Impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.consultoriaService.entity.Consulting;
@@ -32,11 +35,15 @@ public class ConsultServiceImple implements ConsultService {
     }
 
     @Override
-    public List<ConsultDto> getAllConsults() {
-       
-        List<Consulting> consults = consultRepository.findAll();
+    public List<ConsultDto> getAllConsults(int pageNo, int pageSize) {
 
-        List<ConsultDto> consultsResponse = consults.stream().map( consult -> mapToDto(consult)).collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+       
+        Page<Consulting> consults = consultRepository.findAll(pageable);
+
+        List<Consulting> listOfConsultings = consults.getContent();
+
+        List<ConsultDto> consultsResponse = listOfConsultings.stream().map( consult -> mapToDto(consult)).collect(Collectors.toList());
 
         return consultsResponse;
     }
