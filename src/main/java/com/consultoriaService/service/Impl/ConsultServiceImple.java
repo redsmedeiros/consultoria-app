@@ -54,18 +54,33 @@ public class ConsultServiceImple implements ConsultService {
         
         Consulting consulting = consultRepository.findById(consultId).orElseThrow(()-> new ResourceNotFoundException("consultId", "id", consultId));
 
-        Consulting consultExist = consultRepository.findByEmail(consultDto.getEmail());
+        if(consultDto.getEmail() != null){
 
-        if(consultExist == null){
-            
-            throw new ResourceNotFoundException(null, null, consultId);
+            Consulting consultExist = consultRepository.findByEmail(consultDto.getEmail());
+
+            if(consultExist != null){
+                
+                throw new ResourceNotFoundException("comentId", "id", consultId);
+            }
+
+            consulting.setEmail(consultDto.getEmail());
         }
 
-        consulting.setName(consultDto.getName());
-        consulting.setEmail(consultDto.getEmail());
-        consulting.setPhone(consultDto.getPhone());
-        consulting.setType(consultDto.getType());
+        if(consultDto.getName() != null){
 
+            consulting.setName(consultDto.getName());
+        }
+
+        if(consultDto.getPhone() != null){
+
+            consulting.setPhone(consultDto.getPhone());
+        }
+        
+        if(consultDto.getType() != null){
+
+            consulting.setType(consultDto.getType());
+        }
+        
         Consulting updateConsult = consultRepository.save(consulting);
 
         return mapToDto(updateConsult);
