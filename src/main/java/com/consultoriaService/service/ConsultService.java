@@ -13,4 +13,6 @@ public interface ConsultService {
     ConsultDto getConsulById(Long consultId);
 
     ConsultDto updateConsultById(Long consultId, ConsultDto consultDto);
+
+    void deleteConsultById(Long consultId);
 }
