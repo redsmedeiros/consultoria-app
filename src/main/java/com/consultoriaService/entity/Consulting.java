@@ -39,5 +39,5 @@ public class Consulting {
     private String type;
 
     @OneToMany(mappedBy = "consulting", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Cliente> cliente = new HashSet<>();
+    private Set<Cliente> clientes = new HashSet<>();
 }
