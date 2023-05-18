@@ -101,7 +101,7 @@ public class ClienteImpl implements ClienteService {
 
         Cliente clienteUpdated = clienteRepository.save(cliente);
 
-        return null;
+        return mapToDto(clienteUpdated);
     }
 
     private Cliente mapToEntity(ClienteDto clienteDto){

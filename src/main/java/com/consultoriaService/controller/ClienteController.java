@@ -41,5 +41,13 @@ public class ClienteController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PutMapping("/consult/{consultingId}/cliente/{clienteId}")
+    public ResponseEntity<ClienteDto> updatdeClienteById(@PathVariable(value = "consultingId") long consultingId, @PathVariable(value = "clienteId") long clienteId, @RequestBody ClienteDto clienteDto){
+
+        ClienteDto response = clienteService.updateClienteByid(consultingId, clienteId, clienteDto);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     
 }
