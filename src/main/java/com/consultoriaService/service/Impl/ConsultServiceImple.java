@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.consultoriaService.entity.Consulting;
 import com.consultoriaService.exception.ResourceNotFoundException;
 import com.consultoriaService.payload.ConsultDto;
+import com.consultoriaService.payload.ConsultResponse;
 import com.consultoriaService.repository.ConsultRepository;
 import com.consultoriaService.service.ConsultService;
 
@@ -35,15 +37,24 @@ public class ConsultServiceImple implements ConsultService {
     }
 
     @Override
-    public List<ConsultDto> getAllConsults(int pageNo, int pageSize) {
+    public ConsultResponse getAllConsults(int pageNo, int pageSize, String sortBy) {
 
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
        
         Page<Consulting> consults = consultRepository.findAll(pageable);
 
         List<Consulting> listOfConsultings = consults.getContent();
 
-        List<ConsultDto> consultsResponse = listOfConsultings.stream().map( consult -> mapToDto(consult)).collect(Collectors.toList());
+        List<ConsultDto> listOfConsults = listOfConsultings.stream().map( consult -> mapToDto(consult)).collect(Collectors.toList());
+
+        ConsultResponse consultsResponse = new ConsultResponse();
+
+        consultsResponse.setContent(listOfConsults);
+        consultsResponse.setPageNo(consults.getNumber());
+        consultsResponse.setPageSize(consults.getSize());
+        consultsResponse.setTotalElements(consults.getTotalElements());
+        consultsResponse.setTotalPages(consults.getTotalPages());
+        consultsResponse.setLast(consults.isLast());
 
         return consultsResponse;
     }

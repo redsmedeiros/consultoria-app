@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.consultoriaService.payload.ConsultDto;
+import com.consultoriaService.payload.ConsultResponse;
 import com.consultoriaService.service.ConsultService;
+import com.consultoriaService.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/consult")
@@ -37,14 +39,15 @@ public class ConsultController {
     }
 
     @GetMapping
-    public List<ConsultDto> getAllConsults(
-        @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-        @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    public ResponseEntity<ConsultResponse> getAllConsults(
+        @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+        @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy
     ){
 
-        List<ConsultDto> response = consultService.getAllConsults(pageNo, pageSize);
+        ConsultResponse response = consultService.getAllConsults(pageNo, pageSize, sortBy);
 
-        return response;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
