@@ -104,6 +104,20 @@ public class ClienteImpl implements ClienteService {
         return mapToDto(clienteUpdated);
     }
 
+    @Override
+    public void deleteClienteByid(long consultingId, long clienteId) {
+
+        Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(()-> new ResourceNotFoundException("deleteId", "id", clienteId));
+
+        Consulting consulting = consultRepository.findById(consultingId).orElseThrow(()-> new ResourceNotFoundException("consultingId", "id", consultingId));
+
+        if(!cliente.getConsulting().getId().equals(consulting.getId())){
+            throw new ConsultApiException(HttpStatus.NOT_FOUND, "COnsultor não encontrado");
+        }
+
+        clienteRepository.deleteById(clienteId);
+    }
+
     private Cliente mapToEntity(ClienteDto clienteDto){
 
         Cliente cliente = new Cliente();

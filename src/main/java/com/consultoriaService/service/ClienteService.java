@@ -12,4 +12,6 @@ public interface ClienteService {
     ClienteDto getClienteById(long consultingId, long clienteId);
 
     ClienteDto updateClienteByid(long consultingId, long clienteId, ClienteDto clienteDto);
+
+    void deleteClienteByid(long consultingId, long clienteId);
 }
