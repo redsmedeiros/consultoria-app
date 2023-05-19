@@ -1,6 +1,5 @@
 package com.consultoriaService.controller;
 
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,8 @@ import com.consultoriaService.payload.ConsultResponse;
 import com.consultoriaService.service.ConsultService;
 import com.consultoriaService.utils.AppConstants;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/consult")
 public class ConsultController {
@@ -31,7 +32,7 @@ public class ConsultController {
     }
 
     @PostMapping
-    public ResponseEntity<ConsultDto> createConsult(@RequestBody ConsultDto consultDto){
+    public ResponseEntity<ConsultDto> createConsult(@Valid @RequestBody ConsultDto consultDto){
 
         ConsultDto response = consultService.createConsult(consultDto);
 
@@ -59,7 +60,7 @@ public class ConsultController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConsultDto> updateConsult(@PathVariable(name = "id") Long consultId, @RequestBody ConsultDto consultDto){
+    public ResponseEntity<ConsultDto> updateConsult(@PathVariable(name = "id") Long consultId, @Valid @RequestBody ConsultDto consultDto){
 
         ConsultDto response = consultService.updateConsultById(consultId, consultDto);
 

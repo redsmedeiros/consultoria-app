@@ -1,6 +1,5 @@
 package com.consultoriaService.controller;
 
-import com.consultoriaService.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.consultoriaService.payload.ClienteDto;
 import com.consultoriaService.service.ClienteService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/consult/{consultingId}/cliente")
-    public ResponseEntity<ClienteDto> createCliente(@PathVariable(value = "consultingId") Long consultingId, @RequestBody ClienteDto clienteDto){
+    public ResponseEntity<ClienteDto> createCliente(@PathVariable(value = "consultingId") Long consultingId, @Valid @RequestBody ClienteDto clienteDto){
 
         ClienteDto response = clienteService.createCliente(consultingId, clienteDto);
 
@@ -43,7 +44,7 @@ public class ClienteController {
     }
 
     @PutMapping("/consult/{consultingId}/cliente/{clienteId}")
-    public ResponseEntity<ClienteDto> updatdeClienteById(@PathVariable(value = "consultingId") long consultingId, @PathVariable(value = "clienteId") long clienteId, @RequestBody ClienteDto clienteDto){
+    public ResponseEntity<ClienteDto> updatdeClienteById(@PathVariable(value = "consultingId") long consultingId, @PathVariable(value = "clienteId") long clienteId, @Valid @RequestBody ClienteDto clienteDto){
 
         ClienteDto response = clienteService.updateClienteByid(consultingId, clienteId, clienteDto);
 
